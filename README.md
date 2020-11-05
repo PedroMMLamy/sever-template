@@ -1,68 +1,122 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Server-APP-TodoIst
+# Server APP TodoIst - Project 3 Repository II
 
-## Available Scripts
+**TODOIST - Read Me - Server**
 
-In the project directory, you can run:
 
-### `npm start`
+# Description:
+Improve your professional & Personal life satisfaction. Organize your to do tasks in an easy and clear way to simplify your daily routine.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## User Stories:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- **404** - user warning that the page doesn’t exist 
 
-### `npm test`
+- **500** - user warning that something in the page isn’t working
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **homepage** -  Access the root to create the next To do list
 
-### `npm run build`
+- **sign up** - Access all the available features of the website login - log in to personal account
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **logout** - log out from personal account to main page 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- **To do list** - All the created todo´s 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **create To do** - create a new To do 
 
-### `npm run eject`
+- **edit To do** - edit a created To do 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **To do** - written details of a task
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Delete To do** - delete a task
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **profile** - personal list of To do’s
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- **other profiles** - other users personal list of To do’s
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Backlog:
+Other features besides the mvp scope:
+Task Category (Professional/Personal)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## API Endpoints (backend routes)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+| HTTP Method | URL                | Request Body                 | Success status | Error Status | Description                                                                                                                     |
+| ----------- | ------------------ | ---------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| GET         | `/auth/user`       | Saved session                | 200            | 404          | Check if user is logged in and return profile page                                                                              |
+| POST        | `/auth/signup`     | {name, email, password}      | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
+| POST        | `/auth/login`      | {email, password}            | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
+| POST        | `/auth/logout`     | (empty)                      | 204            | 400          | Logs out the user                                                                                                               |
+| GET         | `/auth/user`       | {id}                         | 200            | 400          | Retrieve user information, including user's liked artworks (populated)                                                          |
+| POST        | `/auth/user/edit`  | {id, name, email, Todo} | 201            | 400          | Edits user's name, email and/or list to do´s                                                                          |
+| GET         | `/todo/:id`     | {id}                         | 200            | 400          | Return specific todo from MetAPI                                                                                               |
+| GET         | `/todo/:id`     | {id}                         | 200            | 400          | Return specific todo from MetAPI                                                                                             |
+| POST        | `/todo/add/:id` | {id, userId}                 | 201            | 400          | Create new todo in user´s database                                                                                              | 
+          
 
-### Analyzing the Bundle Size
+# Frontend:
+- Homepage
+- CSS
+- HTML
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
+# Models:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- To Do Model:
 
-### Advanced Configuration
+```  
+ 
+const mongoose = require("mongoose");
+const Todo = mongoose.Schema({
+  text: {
+    type: String,
+  },
+  user_id:String,
+});
+module.exports = mongoose.model("Todo", Todo);
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+- User Model:
 
-### Deployment
+``` 
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+const userSchema = new Schema({
+  username: String,
+  password: String
+}, {
+    timestamps: {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
+    }
+  });
 
-### `npm run build` fails to minify
+const User = mongoose.model('User', userSchema);
+module.exports = User;
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+<br>
+
+## Links
+
+### Trello/Kanban
+
+[Trello](https://trello.com/b/awnRyXFw/todoist)
+
+### Git
+
+The url to your repository and to your deployed project
+
+[Client repository Link](https://github.com/PedroMMLamy/Client-APP-TodoIst)
+
+[Server repository Link](https://github.com/PedroMMLamy/Server-APP-TodoIst)
+
+[Deployed App Link](http://heroku.com)
+
+### Slides
+
+The url to your presentation slides
+
+[Slides Link](http://slides.com)
